@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'https://nevesade-sds2.herokuapp.com';
+const API_URL = 'http://192.168.1.199:8080';
 
 function fetchOrders(){
 
