@@ -28,8 +28,10 @@ function Orders() {
     }, []);
 
   
-    const handleOnPress = () => {
-        navigation.navigate('OrderDetails');
+    const handleOnPress = (order : Order) => {
+        navigation.navigate('OrderDetails',  {
+            order
+        });
 
     }
 
@@ -46,8 +48,11 @@ function Orders() {
                     ) : (
                             orders.map(order => (
 
-                                <TouchableWithoutFeedback key={order.id} onPress={handleOnPress}>
-                                    <OrderCard order={order} />
+                                <TouchableWithoutFeedback 
+                                key={order.id} 
+                                onPress={() => handleOnPress(order)}
+                                >
+                                <OrderCard order={order} />
                                 </TouchableWithoutFeedback>
                             ))
                         )

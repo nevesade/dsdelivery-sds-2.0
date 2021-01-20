@@ -5,26 +5,43 @@ import AppLoading from 'expo-app-loading';
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import  Header  from '../Header';
+import { Order } from '../types';
 
-function OrderDetails() {
 
+type Props =  {
 
+    route: {
+        params: {
+            order: Order;
+        }
+    }
+
+}
+
+function OrderDetails({ route } : Props) {
+
+    const { order } = route.params;
     const navigation = useNavigation();
 
     const handleOnPress = () => {
-        navigation.navigate ('Orders');
+        navigation.navigate('Orders');
 
     }
 
 
     return (
 
-     
+        <>
+            <Header />
             <View >
-                <Text>Detalhes do pedido</Text>
+                <Text>Detalhes do pedido {order.id}</Text>
 
             </View>
-      
+
+
+        </>
+
 
     );
 }
