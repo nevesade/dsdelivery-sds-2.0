@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { StyleSheet, ScrollView, View, Alert } from 'react-native';
+import { StyleSheet, ScrollView, View, Alert, Text } from 'react-native';
 import { TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import fetchOrders from '../api';
 import Header from '../Header';
@@ -12,14 +12,16 @@ import { Order } from '../types';
 function Orders() {
 
     const [orders, setOrders] = useState<Order[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-
+        setIsLoading(true);
         fetchOrders()
             .then(response => setOrders(response.data))
-            .catch( () => Alert.alert('Houve um erro ao buscar os pedidos!'));
-            
-            
+            .catch(() => Alert.alert('Houve um erro ao buscar os pedidos!'))
+            .finally(() => setIsLoading(false));
+
+
 
     }, []);
 
@@ -28,15 +30,20 @@ function Orders() {
         <>
 
             <Header />
-            <ScrollView  style={styles.container}>
-               {
-                   orders.map(order => (
+            <ScrollView style={styles.container}>
+                {
+                    isLoading ? (
 
-                    <TouchableWithoutFeedback key={order.id }>
-                        <OrderCard order={order}/>
-                    </TouchableWithoutFeedback>
-                   ))
-               }
+                        <Text>Buscando Pedidos...</Text>
+                    ) : (
+                            orders.map(order => (
+
+                                <TouchableWithoutFeedback key={order.id}>
+                                    <OrderCard order={order} />
+                                </TouchableWithoutFeedback>
+                            ))
+                        )
+                }
 
 
             </ScrollView>
