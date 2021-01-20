@@ -1,5 +1,6 @@
 
 
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 
 import { StyleSheet, ScrollView, View, Alert, Text } from 'react-native';
@@ -13,6 +14,7 @@ function Orders() {
 
     const [orders, setOrders] = useState<Order[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const navigation = useNavigation();
 
     useEffect(() => {
         setIsLoading(true);
@@ -24,6 +26,12 @@ function Orders() {
 
 
     }, []);
+
+  
+    const handleOnPress = () => {
+        navigation.navigate('OrderDetails');
+
+    }
 
     return (
 
@@ -38,7 +46,7 @@ function Orders() {
                     ) : (
                             orders.map(order => (
 
-                                <TouchableWithoutFeedback key={order.id}>
+                                <TouchableWithoutFeedback key={order.id} onPress={handleOnPress}>
                                     <OrderCard order={order} />
                                 </TouchableWithoutFeedback>
                             ))
