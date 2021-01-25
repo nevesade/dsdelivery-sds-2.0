@@ -3,7 +3,7 @@ import { useFonts, OpenSans_400Regular, OpenSans_700Bold } from '@expo-google-fo
 import { useNavigation } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, Link, Linking } from 'react-native';
 import { RectButton, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { confirmDelivery } from '../api';
 import  Header  from '../Header';
@@ -47,6 +47,9 @@ function OrderDetails({ route } : Props) {
 
         
     }
+    const handleStartNavigation = () => {
+            Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${order.latitude},${order.longitude}`);
+    }
 
 
     return (
@@ -55,7 +58,7 @@ function OrderDetails({ route } : Props) {
             <Header />
             <View  style={styles.container}>
                 <OrderCard order={order} />
-                <RectButton style={styles.button}>
+                <RectButton style={styles.button} onPress={handleStartNavigation}>
                     <Text style={styles.buttonText}>INICIAR NAVEGAÇÃO</Text>
                 </RectButton>
                 <RectButton style={styles.button} onPress={handleConfirmDelivery}>
