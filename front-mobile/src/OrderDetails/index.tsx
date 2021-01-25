@@ -3,8 +3,9 @@ import { useFonts, OpenSans_400Regular, OpenSans_700Bold } from '@expo-google-fo
 import { useNavigation } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { RectButton, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { confirmDelivery } from '../api';
 import  Header  from '../Header';
 import OrderCard from '../OrderCard';
 import { Order } from '../types';
@@ -25,9 +26,26 @@ function OrderDetails({ route } : Props) {
     const { order } = route.params;
     const navigation = useNavigation();
 
-    const handleOnPress = () => {
+    const handleOnCancel = () => {
         navigation.navigate('Orders');
 
+    }
+
+
+    const handleConfirmDelivery = () => {
+        confirmDelivery(order.id)
+        .then(() => {
+
+            Alert.alert(`Pedido ${order.id} confirmado com sucesso!`)
+            navigation.navigate('Orders');
+            
+        })
+        
+        .catch(() => {
+            Alert.alert(`Houve um erro ao confirmar o pedido ${order.id}!`);
+        })
+
+        
     }
 
 
@@ -40,11 +58,11 @@ function OrderDetails({ route } : Props) {
                 <RectButton style={styles.button}>
                     <Text style={styles.buttonText}>INICIAR NAVEGAÇÃO</Text>
                 </RectButton>
-                <RectButton style={styles.button}>
+                <RectButton style={styles.button} onPress={handleConfirmDelivery}>
                     <Text style={styles.buttonText}>CONFIRMAR ENTREGA</Text>
                 </RectButton>
-                <RectButton style={styles.button}>
-                    <Text style={styles.buttonText}>CANCELAR </Text>
+                <RectButton style={styles.button} onPress={handleOnCancel}>
+                    <Text style={styles.buttonText} >CANCELAR </Text>
                 </RectButton>
 
             </View>
