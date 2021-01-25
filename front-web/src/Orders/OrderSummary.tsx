@@ -1,4 +1,4 @@
-import { types } from "util";
+
 import { formatPrice } from "./helpers";
 
 type Props = {

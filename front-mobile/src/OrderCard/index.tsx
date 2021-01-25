@@ -22,7 +22,7 @@ function dateFromNow(date: string) {
 }
 
 
-/*
+
  export function formatPrice(price: number) {
     const formatter = new Intl.NumberFormat('pt-BR', {
 
@@ -34,7 +34,7 @@ function dateFromNow(date: string) {
     return formatter.format(price);
 }
 
-*/
+
 
 function OrderCard({ order }: Props) {
 
@@ -44,8 +44,8 @@ function OrderCard({ order }: Props) {
 
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.orderName}> Pedio {order.id}</Text>
-                    <Text style={styles.orderPrice}>{(order.total)}</Text>
+                    <Text style={styles.orderName}> Pedido {order.id}</Text>
+                    <Text style={styles.orderPrice}> R$ {order.total.toFixed(2)}</Text>
                 </View>
                 <Text style={styles.text}> {dateFromNow(order.moment)}</Text>
                 <View style={styles.productsList}>
