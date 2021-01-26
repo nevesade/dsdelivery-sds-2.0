@@ -48,6 +48,32 @@ function Orders() {
 
       const handleSubmit = () => {
         const productsIds = selectedProducts.map(({ id }) => ({ id }));
+
+
+        if (productsIds.length <= 0) {
+          toast.warning('Selecione apenas 1 producto!');
+        } else {
+          if (orderLocation === undefined) {
+            toast.warning('Digite o seu endereço!');
+          } else {
+            const payload = {
+              ...orderLocation!,
+              products: productsIds
+            }
+    
+            saveOrder(payload).then((response) => {
+              toast.error(`Pedido enviado com sucesso! Nº ${response.data.id}!`);
+              setSelectedProducts([]);
+            })
+              .catch(() => {
+                toast.warning('Erro ao enviar pedido!');
+              })
+          }
+        }
+      
+      }
+
+        /*
         const payload = {
           ...orderLocation!,
           products: productsIds
@@ -59,8 +85,8 @@ function Orders() {
         })
           .catch(() => {
             toast.warning('Erro ao enviar pedido');
-          })
-      }
+          })  */
+      
 
     return (
 
